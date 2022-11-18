@@ -1,6 +1,13 @@
 package me.khun.clinic.controller;
 
-import static me.khun.clinic.application.Application.*;
+import static me.khun.clinic.application.Application.EDIT_PRESCRIPTION_JSP_LOCATION;
+import static me.khun.clinic.application.Application.PRESCRIPTIONS_JSP_LOCATION;
+import static me.khun.clinic.application.Application.PRESCRIPTIONS_SEARCH_URL;
+import static me.khun.clinic.application.Application.PRESCRIPTION_DELETE_URL;
+import static me.khun.clinic.application.Application.PRESCRIPTION_DETAILS_JSP_LOCATION;
+import static me.khun.clinic.application.Application.PRESCRIPTION_DETAILS_URL;
+import static me.khun.clinic.application.Application.PRESCRIPTION_EDIT_URL;
+import static me.khun.clinic.application.Application.PRESCRIPTION_SAVE_URL;
 
 import java.io.IOException;
 

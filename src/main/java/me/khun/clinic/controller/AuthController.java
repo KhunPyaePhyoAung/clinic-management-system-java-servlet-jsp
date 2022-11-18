@@ -1,15 +1,14 @@
 package me.khun.clinic.controller;
 
-import static me.khun.clinic.application.Application.*;
+import static me.khun.clinic.application.Application.LOGIN_URL;
+import static me.khun.clinic.application.Application.LOGOUT_URL;
+
+import java.io.IOException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-
-
-import java.io.IOException;
 
 @WebServlet(
 	urlPatterns = {

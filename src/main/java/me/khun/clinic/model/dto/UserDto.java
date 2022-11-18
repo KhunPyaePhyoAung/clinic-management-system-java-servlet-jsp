@@ -3,16 +3,19 @@ package me.khun.clinic.model.dto;
 import java.time.LocalDate;
 
 import me.khun.clinic.model.entity.Gender;
+import me.khun.clinic.model.entity.User;
 import me.khun.clinic.model.entity.User.Role;
 import me.khun.clinic.model.entity.User.Status;
 
-public class UserDto {
+public class UserDto extends Dto<User> {
 
 	protected Long id;
 
 	protected String name;
 
 	protected String username;
+	
+	protected String password;
 
 	protected LocalDate registrationDate;
 
@@ -35,6 +38,28 @@ public class UserDto {
 	protected Role role;
 
 	protected Status status;
+	
+	public UserDto() {
+		
+	}
+	
+	public UserDto(User user) {
+		this.id = user.getId();
+		this.name = user.getName();
+		this.username = user.getUsername();
+		this.registrationDate = user.getRegistrationDate();
+		this.password = user.getPassword();
+		this.email = user.getEmail();
+		this.phone = user.getPhone();
+		this.dateOfBirth = user.getDateOfBirth();
+		this.street = user.getAddress().getStreet();
+		this.city = user.getAddress().getCity();
+		this.state = user.getAddress().getState();
+		this.country = user.getAddress().getCountry();
+		this.gender = user.getGender();
+		this.role = user.getRole();
+		this.status = user.getStatus();
+	}
 
 	public Long getId() {
 		return id;
@@ -58,6 +83,14 @@ public class UserDto {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public LocalDate getRegistrationDate() {
@@ -147,7 +180,4 @@ public class UserDto {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
-
 }

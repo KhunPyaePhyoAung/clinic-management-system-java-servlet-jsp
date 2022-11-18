@@ -1,17 +1,23 @@
 package me.khun.clinic.model.dto;
 
-public class DoctorSpecialistDto {
+import me.khun.clinic.model.entity.DoctorSpecialist;
 
-	public DoctorSpecialistDto() {
-	}
-
+public class DoctorSpecialistDto extends Dto<DoctorSpecialist> {
+	
 	private Long id;
-
+	
 	private String name;
 
 	private String description;
 
-	private boolean deleted;
+	public DoctorSpecialistDto() {
+	}
+	
+	public DoctorSpecialistDto(DoctorSpecialist doctorSpecialist) {
+		this.id = doctorSpecialist.getId();
+		this.name = doctorSpecialist.getName();
+		this.description = doctorSpecialist.getDescription();
+	}
 
 	public Long getId() {
 		return id;
@@ -37,13 +43,4 @@ public class DoctorSpecialistDto {
 		this.description = description;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	
 }

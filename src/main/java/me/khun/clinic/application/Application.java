@@ -1,5 +1,22 @@
 package me.khun.clinic.application;
 
+import javax.sql.DataSource;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
+
+import me.khun.clinic.model.repo.DoctorRepo;
+import me.khun.clinic.model.repo.DoctorSpecialistRepo;
+import me.khun.clinic.model.repo.UserRepo;
+import me.khun.clinic.model.repo.impl.MySqlDoctorRepoImpl;
+import me.khun.clinic.model.repo.impl.MySqlDoctorSpecialistRepoImpl;
+import me.khun.clinic.model.repo.jdbc.PropertyReader;
+import me.khun.clinic.model.service.DoctorService;
+import me.khun.clinic.model.service.DoctorSpecialistService;
+import me.khun.clinic.model.service.UserService;
+import me.khun.clinic.model.service.impl.DoctorServiceImpl;
+import me.khun.clinic.model.service.impl.DoctorSpecialistServiceImpl;
+import me.khun.clinic.model.service.impl.UserServiceImpl;
+
 public class Application {
 
 	public static final String LOGIN_URL = "/login";
@@ -15,7 +32,6 @@ public class Application {
 	public static final String DOCTOR_SPECIALISTS_SAVE_URL = "/admin/specialists/save";
 	public static final String DOCTOR_SPECIALISTS_EDIT_URL = "/admin/specialists/edit";
 	public static final String DOCTOR_SPECIALISTS_DELETE_URL = "/admin/specialists/delete";
-	public static final String DOCTOR_SPECIALISTS_RESTORE_URL = "/admin/specialists/restore";
 	
 	public static final String DOCTORS_SEARCH_URL = "/member/doctors/search";
 	public static final String DOCTOR_EDIT_URL = "/admin/doctors/edit";
@@ -70,4 +86,41 @@ public class Application {
 	
 	public static final String REPORTS_JSP_LOCATION = "/views/employee/reports.jsp";
 	public static final String CHANGE_PASSWORD_JSP_LOCATION = "/views/member/change-password.jsp";
+	
+	public static final String DATASOURCE_PROPERTIES_FILE_LOCATION = "/datasource.properties";
+	
+	public static final String SQL_PROPERTIES_FILE_LOCATION = "/sql.properties";
+	
+	public static DataSource getDataSource() {
+		var dataSourceInfo = new PropertyReader(DATASOURCE_PROPERTIES_FILE_LOCATION);
+		var dataSource = new MysqlDataSource();
+		dataSource.setUrl(dataSourceInfo.getValue("db.url"));
+		dataSource.setUser(dataSourceInfo.getValue("db.username"));
+		dataSource.setPassword(dataSourceInfo.getValue("db.password"));
+		return dataSource;
+	}
+	
+	public static UserRepo getUserRepo() {
+		return new MySqlDoctorRepoImpl(getDataSource());
+	}
+	
+	public static UserService getUserService() {
+		return new UserServiceImpl(getDoctorRepo());
+	}
+	
+	public static DoctorSpecialistRepo getDoctorSpecialistRepo() {
+		return new MySqlDoctorSpecialistRepoImpl(getDataSource());
+	}
+	
+	public static DoctorSpecialistService getDoctorSpecialistService() {
+		return new DoctorSpecialistServiceImpl(getDoctorSpecialistRepo());
+	}
+	
+	public static DoctorRepo getDoctorRepo() {
+		return new MySqlDoctorRepoImpl(getDataSource());
+	}
+	
+	public static DoctorService getDoctorService() {
+		return new DoctorServiceImpl(getDoctorRepo());
+	}
 }

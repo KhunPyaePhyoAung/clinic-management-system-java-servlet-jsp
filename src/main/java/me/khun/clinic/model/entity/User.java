@@ -1,6 +1,7 @@
 package me.khun.clinic.model.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class User {
 	
@@ -14,10 +15,7 @@ public class User {
 		ACTIVE,
 		CLOSED
 	}
-
-	public User() {
-	}
-
+	
 	protected Long id;
 
 	protected String name;
@@ -41,6 +39,9 @@ public class User {
 	protected Status status;
 
 	protected Address address;
+
+	public User() {
+	}
 
 	public Long getId() {
 		return id;
@@ -136,6 +137,28 @@ public class User {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(address, dateOfBirth, email, gender, id, name, password, phone, registrationDate, role,
+				status, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(address, other.address) && Objects.equals(dateOfBirth, other.dateOfBirth)
+				&& Objects.equals(email, other.email) && gender == other.gender && Objects.equals(id, other.id)
+				&& Objects.equals(name, other.name) && Objects.equals(password, other.password)
+				&& Objects.equals(phone, other.phone) && Objects.equals(registrationDate, other.registrationDate)
+				&& role == other.role && status == other.status && Objects.equals(username, other.username);
 	}
 
 	

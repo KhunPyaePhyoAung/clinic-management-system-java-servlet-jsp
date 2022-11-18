@@ -1,6 +1,14 @@
 package me.khun.clinic.controller;
 
-import static me.khun.clinic.application.Application.*;
+import static me.khun.clinic.application.Application.ADD_PATIENT_JSP_LOCATION;
+import static me.khun.clinic.application.Application.EDIT_PATIENT_JSP_LOCATION;
+import static me.khun.clinic.application.Application.PATIENTS_JSP_LOCATION;
+import static me.khun.clinic.application.Application.PATIENTS_SEARCH_URL;
+import static me.khun.clinic.application.Application.PATIENT_DELETE_URL;
+import static me.khun.clinic.application.Application.PATIENT_EDIT_URL;
+import static me.khun.clinic.application.Application.PATIENT_PROFILE_JSP_LOCATION;
+import static me.khun.clinic.application.Application.PATIENT_PROFILE_URL;
+import static me.khun.clinic.application.Application.PATIENT_SAVE_URL;
 
 import java.io.IOException;
 

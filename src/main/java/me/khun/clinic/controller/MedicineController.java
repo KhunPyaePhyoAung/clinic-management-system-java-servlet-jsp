@@ -1,6 +1,11 @@
 package me.khun.clinic.controller;
 
-import static me.khun.clinic.application.Application.*;
+import static me.khun.clinic.application.Application.MEDICINES_DELETE_URL;
+import static me.khun.clinic.application.Application.MEDICINES_EDIT_URL;
+import static me.khun.clinic.application.Application.MEDICINES_JSP_LOCATION;
+import static me.khun.clinic.application.Application.MEDICINES_RESTORE_URL;
+import static me.khun.clinic.application.Application.MEDICINES_SAVE_URL;
+import static me.khun.clinic.application.Application.MEDICINES_SEARCH_URL;
 
 import java.io.IOException;
 

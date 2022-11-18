@@ -1,60 +1,62 @@
-function toggleShowProfilePictureMenu() {
-	var menu  = document.getElementById("profile-picture-menu");
-	menu.classList.toggle("d-block");
-}
+document.addEventListener("DOMContentLoaded", () => {
+	listenAlertCloseButton();
+	listenFormSubmitAndRemoveEmptyParameter();
+});
 
-window.onclick = function(event) {
-	console.log("Hello JavaScript");
-	if (!event.target.matches(".dropdown-btn")) {
-		var dropdowns = document.getElementsByClassName("dropdown-content");
-		
-		for (var i = 0; i < dropdowns.length; i++) {
-			var currentDropdown = dropdowns[i];
-			if (currentDropdown.classList.contains("d-block")) {
-				currentDropdown.classList.remove("d-block");
-			}
-		}
+const listenAlertCloseButton = () => {
+	let alerts = document.getElementsByClassName("alertMessage");
+	for (let i = 0; i < alerts.length; i++) {
+		let alert = alerts[i];
+		let btnClose = alert.querySelector(".btn-alert-close");
+		btnClose.addEventListener("click", () => {
+			alert.remove();
+		});
+		setTimeout(() => {
+			alert.remove();
+		}, 10000);
 	}
-}
+};
 
-function show(id) {
-	document.getElementById(id).classList.remove("d-none");
-	document.getElementById(id).classList.add("d-block");
-}
+const listenFormSubmitAndRemoveEmptyParameter = () => {
+	let forms = document.querySelectorAll("form");
+	forms.forEach(form => {
+        form.addEventListener("formdata", event => {
+			let formData = event.formData;
+            for (let [name, value] of Array.from(formData.entries())) {
+	            if (value === '') {
+					formData.delete(name);
+				}
+	         }
+        });
+    });
+};
 
-function hide(id) {
-	document.getElementById(id).classList.remove("d-block");
-	document.getElementById(id).classList.add("d-none");
-}
+// function show(id) {
+// 	document.getElementById(id).classList.remove('d-none');
+// 	document.getElementById(id).classList.add('d-block');
+// }
 
-function hideDoctorSpecialistForm() {
-	var form = document.getElementById('specialist-form');
-	var inputs = form.getElementsByTagName('input');
-	for (var i = 0; i < inputs.length; i++) {
-		inputs[i].value = "";
-	}
-	form.classList.remove("d-block");
-	form.classList.add("d-none");
-}
+// function hide(id) {
+// 	document.getElementById(id).classList.remove('d-block');
+// 	document.getElementById(id).classList.add('d-none');
+// }
 
-function hideMedicineForm() {
-	var form = document.getElementById('medicine-form');
-	var inputs = form.getElementsByTagName('input');
-	for (var i = 0; i < inputs.length; i++) {
-		inputs[i].value = "";
-	}
-	form.classList.remove("d-block");
-	form.classList.add("d-none");
-}
+// function hideMedicineForm() {
+// 	var form = document.getElementById('medicine-form');
+// 	var inputs = form.getElementsByTagName('input');
+// 	for (var i = 0; i < inputs.length; i++) {
+// 		inputs[i].value = '';
+// 	}
+// 	form.classList.remove('d-block');
+// 	form.classList.add('d-none');
+// }
 
-function hideDiseaseForm() {
-	var form = document.getElementById('disease-form');
-	var inputs = form.getElementsByTagName('input');
-	for (var i = 0; i < inputs.length; i++) {
-		inputs[i].value = "";
-	}
-	form.classList.remove("d-block");
-	form.classList.add("d-none");
-}
-
-
+// function hideDiseaseForm() {
+// 	var form = document.getElementById('disease-form');
+// 	var inputs = form.getElementsByTagName('input');
+// 	for (var i = 0; i < inputs.length; i++) {
+// 		inputs[i].value = '';
+// 	}
+// 	form.classList.remove('d-block');
+// 	form.classList.add('d-none');
+// }

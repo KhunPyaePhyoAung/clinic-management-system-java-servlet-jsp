@@ -1,6 +1,7 @@
 package me.khun.clinic.controller;
 
-import static me.khun.clinic.application.Application.*;
+import static me.khun.clinic.application.Application.REPORTS_JSP_LOCATION;
+import static me.khun.clinic.application.Application.REPORTS_SEARCH_URL;
 
 import java.io.IOException;
 

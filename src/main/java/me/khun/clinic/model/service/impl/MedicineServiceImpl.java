@@ -1,8 +1,9 @@
-package me.khun.clinic.model.service;
+package me.khun.clinic.model.service.impl;
 
 import java.util.List;
 
 import me.khun.clinic.model.entity.Medicine;
+import me.khun.clinic.model.service.MedicineService;
 
 public class MedicineServiceImpl implements MedicineService {
 

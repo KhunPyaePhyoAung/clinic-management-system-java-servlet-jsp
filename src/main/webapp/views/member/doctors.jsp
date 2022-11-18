@@ -47,7 +47,6 @@
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Gender</th>
-                    <th>Age</th>
                     <th>Status</th>
                     <th>City</th>
                     <th>State</th>
@@ -55,84 +54,69 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-right content-box">1</td>
-                    <td>U Tun Naing</td>
-                    <td>Internal medicine</td>
-                    <td>09262683726</td>
-                    <td>tunnaing@gmail.com</td>
-                    <td class="text-center content-box">Male</td>
-                    <td class="text-center content-box">34</td>
-                    <td class="text-center content-box">
-                    	<span class="status status-green">Active</span>
-                    </td>
-                    <td>Toungoo</td>
-                    <td>Bago</td>
-                    <td class="text-center content-box">
-                    	<c:url var="viewDoctorProfileUrl" value="/member/doctors/profile"></c:url>
-                    	<a href="${viewDoctorProfileUrl}"><i class="fa-solid fa-user action-btn"></i></a>
-                    	
-                    	<c:url var="editDoctorProfileUrl" value="/admin/doctors/edit">
-                    		<c:param name="id">1</c:param>
-                    	</c:url>
-                    	<a href="${editDoctorProfileUrl}"><i class="fa-solid fa-pen-to-square action-btn ml-1"></i></a>
-                    	
-                    	<c:url var="deleteDoctorUrl" value="/admin/doctors/delete"></c:url>
-                    	<a href="${deleteDoctorUrl}"><i class="fa-solid fa-trash-can action-btn ml-1"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right content-box">2</td>
-                    <td>Daw San Thidar</td>
-                    <td>Internal medicine</td>
-                    <td>09456789362</td>
-                    <td>santhidar@gmail.com</td>
-                    <td class="text-center content-box">Female</td>
-                    <td class="text-center content-box">44</td>
-                    <td class="text-center content-box">
-                    	<span class="status status-green">Active</span>
-                    </td>
-                    <td>Toungoo</td>
-                    <td>Bago</td>
-                    <td class="text-center content-box">
-                    	<c:url var="viewDoctorProfileUrl" value="/member/doctors/profile"></c:url>
-                    	<a href="${viewDoctorProfileUrl}"><i class="fa-solid fa-user action-btn"></i></a>
-                    	
-                    	<c:url var="editDoctorProfileUrl" value="/admin/doctors/edit">
-                    		<c:param name="id">1</c:param>
-                    	</c:url>
-                    	<a href="${editDoctorProfileUrl}"><i class="fa-solid fa-pen-to-square action-btn ml-1"></i></a>
-                    	
-                    	<c:url var="deleteDoctorUrl" value="/admin/doctors/delete"></c:url>
-                    	<a href="${deleteDoctorUrl}"><i class="fa-solid fa-trash-can action-btn ml-1"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right content-box">3</td>
-                    <td>U Zay Ya Thu Ta</td>
-                    <td>Allergy and immunology</td>
-                    <td>09765687651</td>
-                    <td>zayyathuta@gmail.com</td>
-                    <td class="text-center content-box">Male</td>
-                    <td class="text-center content-box">46</td>
-                    <td class="text-center content-box">
-                    	<span class="status status-red">Closed</span>
-                    </td>
-                    <td>Toungoo</td>
-                    <td>Bago</td>
-                    <td class="text-center content-box">
-                    	<c:url var="viewDoctorProfileUrl" value="/member/doctors/profile"></c:url>
-                    	<a href="${viewDoctorProfileUrl}"><i class="fa-solid fa-user action-btn"></i></a>
-                    	
-                    	<c:url var="editDoctorProfileUrl" value="/admin/doctors/edit">
-                    		<c:param name="id">1</c:param>
-                    	</c:url>
-                    	<a href="${editDoctorProfileUrl}"><i class="fa-solid fa-pen-to-square action-btn ml-1"></i></a>
-                    	
-                    	<c:url var="deleteDoctorUrl" value="/admin/doctors/delete"></c:url>
-                    	<a href="${deleteDoctorUrl}"><i class="fa-solid fa-trash-can action-btn ml-1"></i></a>
-                    </td>
-                </tr>
+            	<c:forEach var="doctor" items="${requestScope.doctors}" varStatus="doctorCount">
+            		<tr>
+	                    <td class="text-right content-box">${doctorCount.count}</td>
+	                    <td>${doctor.getName()}</td>
+	                    <td>${doctor.getSpecialistName()}</td>
+	                    <td>${doctor.getPhone()}</td>
+	                    <td>${doctor.getEmail()}</td>
+	                    <td class="text-center content-box">
+                   			 <c:choose>
+                   			 	<c:when test="${doctor.getGender() == 'MALE'}">
+		                    			<i class="fa-solid fa-mars text-green"></i>
+		                    	</c:when>
+		                    	<c:when test="${doctor.getGender() == 'FEMALE'}">
+		                    			<i class="fa-solid fa-venus text-pink"></i>
+		                    	</c:when>
+		                    	<c:when test="${doctor.getGender() == 'OTHER'}">
+		                    			<i class="fa-solid fa-genderless text-blue"></i>
+		                    	</c:when>
+                   			 </c:choose>
+                   		</td>
+	                    
+	                    <td class="text-center content-box">
+	                    	<c:choose>
+		                    	<c:when test="${doctor.getStatus() eq 'ACTIVE'}">
+				                    	<span class="status status-green">Active</span>
+		                    	</c:when>
+		                    		
+		                    	<c:when test="${doctor.getStatus() eq 'CLOSED'}">
+				                    	<span class="status status-red">Closed</span>
+		                    	</c:when>
+		                    </c:choose>
+	                    </td>
+	                    
+	                    <td>${doctor.getCity()}</td>
+	                    
+	                    <td>${doctor.getState()}</td>
+	                    
+	                    <td class="text-center content-box">
+	                    	<c:url var="viewDoctorProfileUrl" value="/member/doctors/profile">
+	                    		<c:param name="id">${doctor.getId()}</c:param>
+	                    	</c:url>
+	                    	<a href="${viewDoctorProfileUrl}" class="text-blue">
+	                    		<i class="fa-solid fa-user action-btn"></i>
+	                    	</a>
+	                    	
+	                    	<c:url var="editDoctorProfileUrl" value="/admin/doctors/edit">
+	                    		<c:param name="id">${doctor.getId()}</c:param>
+	                    	</c:url>
+	                    	<a href="${editDoctorProfileUrl}" class="text-green">
+	                    		<i class="fa-solid fa-pen-to-square action-btn ml-1"></i>
+	                    	</a>
+	                    	
+	                    	<c:url var="deleteDoctorUrl" value="/admin/doctors/delete">
+	                    		<c:param name="id">${doctor.getId()}</c:param>
+	                    	</c:url>
+	                    	<a href="${deleteDoctorUrl}" class="text-red" onclick="return confirm('Are you sure to delete this doctor?')">
+	                    		<i class="fa-solid fa-trash-can action-btn ml-1"></i>
+	                    	</a>
+	                    	
+	                    </td>
+	                </tr>
+            	</c:forEach>
+	                
             </tbody>
         </table>
     </div>

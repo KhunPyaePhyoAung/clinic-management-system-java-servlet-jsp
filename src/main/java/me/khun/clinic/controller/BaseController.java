@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import me.khun.clinic.application.Application;
 
 public abstract class BaseController extends HttpServlet {
@@ -20,6 +21,12 @@ public abstract class BaseController extends HttpServlet {
 
 	protected void redirect(HttpServletResponse resp, String path) throws IOException {
 		resp.sendRedirect(getServletContext().getContextPath().concat(path));
+	}
+	
+	protected Object cutAttributeFromSession(HttpSession session, String attributeName) {
+		var attribute = session.getAttribute(attributeName);
+		session.removeAttribute(attributeName);
+		return attribute;
 	}
 
 	protected static class NavigationInfo {

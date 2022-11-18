@@ -1,9 +1,10 @@
-package me.khun.clinic.model.repo;
+package me.khun.clinic.model.repo.impl;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 import me.khun.clinic.model.entity.Medicine;
+import me.khun.clinic.model.repo.MedicineRepo;
 
 public class MySqlMedicineRepoImpl implements MedicineRepo {
 
@@ -29,9 +30,9 @@ public class MySqlMedicineRepoImpl implements MedicineRepo {
 	}
 
 	@Override
-	public Medicine deleteById(Long id) {
+	public boolean deleteById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
@@ -42,6 +43,12 @@ public class MySqlMedicineRepoImpl implements MedicineRepo {
 
 	@Override
 	public List<Medicine> search(Predicate<Medicine> filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Medicine> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

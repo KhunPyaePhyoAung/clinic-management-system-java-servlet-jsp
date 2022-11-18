@@ -1,9 +1,10 @@
-package me.khun.clinic.model.service;
+package me.khun.clinic.model.service.impl;
 
 import java.util.List;
 
 import me.khun.clinic.model.entity.Patient;
 import me.khun.clinic.model.entity.User.Status;
+import me.khun.clinic.model.service.PatientService;
 
 public class PatientServiceImpl implements PatientService {
 

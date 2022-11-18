@@ -13,10 +13,13 @@
     <link rel="stylesheet" href="${styleLink}">
     
     <c:url var="jsLink" value="/assets/js/application.js" />
-    <script src="${jsLink}" ></script>
+    <script src="${jsLink}" defer></script>
     
     <c:url var="fontAwesomeLink" value="/assets/font-6/css/all.css" />
     <link rel="stylesheet" href="${fontAwesomeLink}">
+    
+    <c:url var="specialistsJsLink" value="/assets/js/specialists.js" />
+	<script src="${specialistsJsLink}" defer></script>
 </head>
 <body>
     <header>

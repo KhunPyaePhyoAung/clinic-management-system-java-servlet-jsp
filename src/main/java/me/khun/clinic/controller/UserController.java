@@ -1,6 +1,13 @@
 package me.khun.clinic.controller;
 
-import static me.khun.clinic.application.Application.*;
+import static me.khun.clinic.application.Application.ADD_DOCTOR_JSP_LOCATION;
+import static me.khun.clinic.application.Application.CHANGE_PASSWORD_JSP_LOCATION;
+import static me.khun.clinic.application.Application.CHANGE_PASSWORD_URL;
+import static me.khun.clinic.application.Application.DOCTOR_PROFILE_JSP_LOCATION;
+import static me.khun.clinic.application.Application.HOME_URL;
+import static me.khun.clinic.application.Application.PROFILE_EDIT_URL;
+import static me.khun.clinic.application.Application.PROFILE_SAVE_URL;
+import static me.khun.clinic.application.Application.PROFILE_URL;
 
 import java.io.IOException;
 
@@ -8,6 +15,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import me.khun.clinic.application.Application;
+import me.khun.clinic.model.service.UserService;
+import me.khun.clinic.model.service.exception.ServiceException;
+import me.khun.clinic.util.StringUtils;
 
 @WebServlet(
 	urlPatterns = {
@@ -21,6 +32,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class UserController extends BaseController {
 
 	private static final long serialVersionUID = 1L;
+	
+	private UserService userService;
+	
+	@Override
+	public void init() {
+		this.userService = Application.getUserService();
+	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,8 +99,20 @@ public class UserController extends BaseController {
 			);
 	}
 
-	private void savePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		redirect(resp, PROFILE_URL);
+	private void savePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		var id = StringUtils.parseLong(req.getParameter("id"));
+		var oldPassword = req.getParameter("oldPassword");
+		var newPassword = req.getParameter("newPassword");
+		
+		try {
+			userService.changePassword(id, oldPassword, newPassword);
+		} catch (ServiceException e) {
+			req.setAttribute("exception", e);
+			navigateToChangePasswordPage(req, resp);
+			return;
+		}
+		
+		redirect(resp, HOME_URL);
 	}
 
 	private void navigateToProfilePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

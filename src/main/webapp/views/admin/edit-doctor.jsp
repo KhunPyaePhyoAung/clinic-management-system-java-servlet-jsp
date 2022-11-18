@@ -8,31 +8,22 @@
         
         <c:url var="saveUrl" value="/admin/doctors/save" />
         <form class="mt-2" action="${saveUrl}" method="post">
-        
-        	<div class="text-center">
-        		<div class="profile-picture-select">
-        			<c:url var="defaultProfilePictureUrl" value="/assets/images/man.png" />
-        			<img class="profile-img dropdown-btn" src="${defaultProfilePictureUrl}" alt="Profile Picture" onclick="toggleShowProfilePictureMenu()" />
-        			<div id="profile-picture-menu" class="profile-picture-menu dropdown-content">
-        				<div class="menu-item">Select Profile Picture</div>
-        				<div class="menu-item">Remove Profile Picture</div>
-        			</div>
-        		</div>
-        	</div>
-        	
+        	<input type="hidden" name="id" value="${doctor.getId()}" />
         	<div class="row mt-2">
         		<div class="col form-group w-50">
         			<label for="">Full Name</label>
-        			<input type="text" />
+        			<input type="text" name="name" value="${doctor.getName()}" required />
         		</div>
         		
         		<div class="col form-group w-50">
-        			<label for="">Specialist</label>
-        			<select name="">
-        				<option value="" selected disabled hidden>-- select specialist --</option>
-        				<option value="">Surgery</option>
-        				<option value="">Internal medicine</option>
-        				<option value="">Allergy and immunology</option>
+        			<label>Specialist</label>
+        			<select name="specialist" required>
+        				
+        				<c:forEach var="specialist" items="${requestScope.specialists}">
+        					<option value="${specialist.getId()}" ${doctor.getSpecialistId() eq specialist.getId() ? 'selected' : ''}>
+        						${specialist.getName()}
+        					</option>
+        				</c:forEach>
         			</select>
         		</div>
         		
@@ -42,24 +33,23 @@
         	<div class="row mt-2">
         	
         		<div class="col form-group w-50">
-        			<label for="">Email</label>
-        			<input type="email" />
+        			<label>Email</label>
+        			<input type="email" name="email" value="${doctor.getEmail()}" />
         		</div>
         			
         		<div class="row form-group w-50">
 	        		<div class="col form-group w-50">
-	        			<label for="">Gender</label>
-	        			<select name="">
-	        				<option value="" selected disabled hidden>-- select gender --</option>
-	        				<option value="">Male</option>
-	        				<option value="">Female</option>
-	        				<option value="">Other</option>
+	        			<label>Gender</label>
+	        			<select name="gender" required>
+	        				<option value="MALE" ${doctor.getGender() eq 'MALE' ? 'selected' : ''}>Male</option>
+	        				<option value="FEMALE" ${doctor.getGender() eq 'FEMALE' ? 'selected' : ''}>Female</option>
+	        				<option value="OTHER" ${doctor.getGender() eq 'OTHER' ? 'selected' : ''}>Other</option>
 	        			</select>
 	        		</div>
 	        		
 	        		<div class="col form-group w-50">
-	        			<label for="">Date Of Birth</label>
-	        			<input type="date" />
+	        			<label>Date Of Birth</label>
+	        			<input type="date" name="dateOfBirth" value="${doctor.getDateOfBirth()}" required />
 	        		</div>
 	        	</div>
         		
@@ -69,16 +59,16 @@
         	<div class="row mt-2">
         		
         		<div class="col form-group w-50">
-        			<label for="">Phone</label>
-        			<input type="tel" />
+        			<label>Phone</label>
+        			<input type="tel" name="phone" value="${doctor.getPhone()}" required />
         		</div>
         		
         		<div class="row form-group w-50">
         			<div class="col form-group w-50">
-	        			<label for="">Account Status</label>
-	        			<select name="" id="">
-	        				<option value="">Active</option>
-	        				<option value="">Closed</option>
+	        			<label>Account Status</label>
+	        			<select name="status" required>
+	        				<option value="ACTIVE" ${doctor.getStatus() eq 'ACTIVE' ? 'selected' : ''}>Active</option>
+	        				<option value="CLOSED" ${doctor.getStatus() eq 'CLOSED' ? 'selected' : ''}>Closed</option>
 	        			</select>
 	        		</div>
 	        		
@@ -92,13 +82,13 @@
         		<h3>Address</h3>
         		<div class="row mt-1">
 	        		<div class="col form-group w-50">
-	        			<label for="">Street</label>
-	        			<input type="text" />
+	        			<label>Street</label>
+	        			<input type="text" name="street" value="${doctor.getStreet()}" />
 	        		</div>
 	        		
 	        		<div class="col form-group w-50">
-        				<label for="">City</label>
-        				<input type="text" />
+        				<label>City</label>
+        				<input type="text" name="city" value="${doctor.getCity()}" required />
         			</div>
         		</div>
         		
@@ -106,13 +96,13 @@
         		<div class="row mt-2">
         			
         			<div class="col form-group w-50">
-        				<label for="">State</label>
-        				<input type="text" />
+        				<label>State</label>
+        				<input type="text" name="state" value="${doctor.getState()}" required />
         			</div>
         			
         			<div class="col form-group w-50">
-        				<label for="">Country</label>
-        				<input type="text" />
+        				<label>Country</label>
+        				<input type="text" name="country" value="${doctor.getCountry()}"/>
         			</div>
         		</div>
         	</div>

@@ -11,10 +11,12 @@ public interface BaseRepo<ID, T> {
 
 	public boolean delete(T entity);
 
-	public T deleteById(ID id);
+	public boolean deleteById(ID id);
 
 	public T findById(ID id);
 
 	public List<T> search(Predicate<T> filter);
+	
+	public List<T> findAll();
 
 }

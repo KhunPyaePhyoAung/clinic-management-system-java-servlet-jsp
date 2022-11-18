@@ -1,9 +1,10 @@
-package me.khun.clinic.model.service;
+package me.khun.clinic.model.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import me.khun.clinic.model.entity.Prescription;
+import me.khun.clinic.model.service.PrescriptionService;
 
 public class PrescriptionServiceImpl implements PrescriptionService {
 
