@@ -170,7 +170,7 @@ public class UserValidator {
 		}
 		
 		if (address != null) {
-			AddressValidator.validate(user.getAddress());			
+			AddressValidator.validate(address);			
 		}
 	}
 }

@@ -1,10 +1,9 @@
 package me.khun.clinic.model.entity.validator;
 
-import me.khun.clinic.model.entity.DoctorSpecialist;
+import me.khun.clinic.model.entity.Disease;
 import me.khun.clinic.model.service.exception.InvalidFieldException;
 
-public class DoctorSpecialistValidator {
-	
+public class DiseaseValidator {
 	public static final boolean NAME_NULLABLE = false;
 	public static final boolean NAME_EMPTYABLE = false;
 	public static final int MIN_NAME_LENGTH = 1;
@@ -14,7 +13,7 @@ public class DoctorSpecialistValidator {
 	public static final int MIN_DESCRIPTION_LENGTH = 0;
 	public static final int MAX_DESCRIPTION_LENGTH = 255;
 	
-	public static void validate(DoctorSpecialist entity) {
+	public static void validate(Disease entity) {
 		
 		var name = entity.getName() == null ? null : entity.getName().trim();
 		entity.setName(name);

@@ -62,7 +62,6 @@ CREATE TABLE `disease` (
     `id` BIGINT AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL UNIQUE,
     `description` VARCHAR(255),
-    `deleted` BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (`id`)
 );
 

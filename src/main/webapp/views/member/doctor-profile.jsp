@@ -9,7 +9,7 @@
 		<div class="profile d-flex justify-content-even mt-4">
 			
 			<div>
-				<div class="font-size-l font-weight-xxl mt-1 text-blue">${doctor.getName()}</div>
+				<div class="font-size-l font-weight-xxl mt-1">${doctor.getName()}</div>
 				
 				<hr class="mt-2" />
 				
@@ -41,9 +41,11 @@
 					
 					<i class="fa-solid fa-location-dot"></i>
 					<span>
-						${doctor.getStreet()},
+						<c:if test="${not empty doctor.getStreet()}">
+							doctor.getStreet(), 
+						</c:if>
 						<c:if test="${not empty doctor.getCity()}">
-							, ${doctor.getCity()}
+							${doctor.getCity()}
 						</c:if>
 						<c:if test="${not empty doctor.getState()}">
 							, ${doctor.getState()}

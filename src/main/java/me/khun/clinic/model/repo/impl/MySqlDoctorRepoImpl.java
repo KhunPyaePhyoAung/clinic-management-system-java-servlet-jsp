@@ -17,9 +17,9 @@ import me.khun.clinic.model.entity.Doctor;
 import me.khun.clinic.model.repo.DoctorRepo;
 import me.khun.clinic.model.repo.exception.DataAccessException;
 import me.khun.clinic.model.repo.jdbc.DoctorRowMapper;
-import me.khun.clinic.model.repo.jdbc.PropertyReader;
 import me.khun.clinic.model.repo.jdbc.RowMapper;
 import me.khun.clinic.util.DBUtils;
+import me.khun.clinic.util.PropertyReader;
 
 public class MySqlDoctorRepoImpl extends MySqlUserRepoImpl implements DoctorRepo {
 	

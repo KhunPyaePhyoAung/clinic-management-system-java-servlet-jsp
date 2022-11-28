@@ -17,9 +17,9 @@ import me.khun.clinic.model.entity.DoctorSpecialist;
 import me.khun.clinic.model.repo.DoctorSpecialistRepo;
 import me.khun.clinic.model.repo.exception.DataAccessException;
 import me.khun.clinic.model.repo.jdbc.DoctorSpecialistRowMapper;
-import me.khun.clinic.model.repo.jdbc.PropertyReader;
 import me.khun.clinic.model.repo.jdbc.RowMapper;
 import me.khun.clinic.util.DBUtils;
+import me.khun.clinic.util.PropertyReader;
 
 public class MySqlDoctorSpecialistRepoImpl implements DoctorSpecialistRepo {
 
@@ -149,7 +149,6 @@ public class MySqlDoctorSpecialistRepoImpl implements DoctorSpecialistRepo {
 		} finally {
 			DBUtils.close(stmt, connection);
 		}
-
 	}
 
 	@Override

@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="app" uri="/WEB-INF/custom-tag.tld" %>
+
+<c:url var="specialistsJsLink" value="/assets/js/specialists.js" />
+<script src="${specialistsJsLink}" defer></script>
+	
 <section class="w-100">
 	
 	<div id="specialist-form-wrapper" class="container bg-white mb-3 ${empty doctorSpecialist ? 'd-none' : '' }">

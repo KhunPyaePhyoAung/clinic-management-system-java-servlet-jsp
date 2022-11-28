@@ -1,4 +1,4 @@
-package me.khun.clinic.model.repo.jdbc;
+package me.khun.clinic.util;
 
 import java.io.IOException;
 import java.util.Properties;

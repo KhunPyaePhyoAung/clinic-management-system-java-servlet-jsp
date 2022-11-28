@@ -18,39 +18,39 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import me.khun.clinic.application.Application;
-import me.khun.clinic.model.entity.DoctorSpecialist;
-import me.khun.clinic.model.service.DoctorSpecialistService;
+import me.khun.clinic.model.entity.Disease;
+import me.khun.clinic.model.service.DiseaseService;
 import me.khun.clinic.model.service.exception.DuplicateEntityException;
 import me.khun.clinic.model.service.exception.InvalidFieldException;
 import me.khun.clinic.test.DatabaseInitializer;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class DoctorSpecialistServiceTest {
+public class DiseaseServiceTest {
+
+	private DiseaseService service;
 	
-	private DoctorSpecialistService service;
-	
-	public DoctorSpecialistServiceTest() {
-		service = Application.getDoctorSpecialistService();
+	public DiseaseServiceTest() {
+		this.service = Application.getDiseaseService();
 	}
 	
 	@BeforeAll
 	@AfterAll
 	public static void truncateTable() {
-		DatabaseInitializer.truncateTables(Application.getDataSource(), "doctor", "address", "user", "doctor_specialist");
+		DatabaseInitializer.truncateTables(Application.getDataSource(), "disease");
 	}
 
 	@Test
 	@Order(1)
-	@DisplayName("Search the doctor specialists with the null keyword when there is no data.")
-	public void givenNullKeyword_SearchDoctorSpecialists_ThereIsNoData_EmptyList() {
+	@DisplayName("Search the diseases with the null keyword when there is no data.")
+	public void givenNullKeyword_SearchDiseases_ThereIsNoData_EmptyList() {
 		var result = service.search(null);
 		assertEquals(0, result.size());
 	}
 	
 	@Test
 	@Order(2)
-	@DisplayName("Search the doctor specialists with a keyword when there is no data.")
-	public void givenKeyword_SearchDoctorSpecialists_ThereIsNoData_EmptyList() {
+	@DisplayName("Search the diseases with a keyword when there is no data.")
+	public void givenKeyword_SearchDiseases_ThereIsNoData_EmptyList() {
 		var result = service.search("OG");
 		assertEquals(0, result.size());
 		
@@ -60,11 +60,11 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(3)
-	@DisplayName("Create a doctor specialist.")
-	public void createDoctorSpecialist_ReturnCreatedDoctorSpecialist() {
-		var ds = new DoctorSpecialist();
-		ds.setName("      OG     ");
-		ds.setDescription("     OG Description     ");
+	@DisplayName("Create a disease.")
+	public void createDisease_ReturnCreatedDisease() {
+		var ds = new Disease();
+		ds.setName("      Headache     ");
+		ds.setDescription("     Headache Description     ");
 		var saved = service.save(ds);
 		
 		ds.setId(saved.getId());
@@ -75,10 +75,10 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(4)
-	@DisplayName("Create a doctor specialist without the description.")
-	public void createDoctorSpecialist_WithoutDescription_ReturnCreatedDoctorSpecialist() {
-		var ds = new DoctorSpecialist();
-		ds.setName("Surgery");
+	@DisplayName("Create a disease without the description.")
+	public void createDisease_WithoutDescription_ReturnCreatedDisease() {
+		var ds = new Disease();
+		ds.setName("Allergies");
 		var saved = service.save(ds);
 		
 		ds.setId(saved.getId());
@@ -89,36 +89,36 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(5)
-	@DisplayName("Create a doctor specialist without the name.")
-	public void createDoctorSpecialist_WithoutName_ThrowsException() {
-		var ds = new DoctorSpecialist();
+	@DisplayName("Should throw the exception when creating a disease without the name.")
+	public void createDisease_WithoutName_ThrowsException() {
+		var ds = new Disease();
 		ds.setDescription("Description");
 		assertThrows(InvalidFieldException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(6)
-	@DisplayName("Create a doctor specialist with the name of null value.")
-	public void createDoctorSpecialist_NameIsNull_ThrowsException() {
-		var ds = new DoctorSpecialist();
+	@DisplayName("Should throw the exception when creating a disease with the name of null value.")
+	public void createDisease_NameIsNull_ThrowsException() {
+		var ds = new Disease();
 		ds.setName(null);
 		assertThrows(InvalidFieldException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(7)
-	@DisplayName("Create a doctor specialist with the empty name.")
-	public void createDoctorSpecialist_NameIsEmpty_ThrowsException() {
-		var ds = new DoctorSpecialist();
+	@DisplayName("Should throw the exception when creating a disease with the empty name.")
+	public void createDisease_NameIsEmpty_ThrowsException() {
+		var ds = new Disease();
 		ds.setName("");
 		assertThrows(InvalidFieldException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(8)
-	@DisplayName("Create a doctor specialist with the name of length exceeding max length.")
-	public void createDoctorSpecialist_NameLengthExceedsMaxLength_ThrowsException() {
-		var ds = new DoctorSpecialist();
+	@DisplayName("Should throw the exception when creating a disease with the name of length exceeding max length.")
+	public void createDisease_NameLengthExceedsMaxLength_ThrowsException() {
+		var ds = new Disease();
 		ds.setName("""
 				abcdefghijklmnopqrstuvwxyz
 				abcdefghijklmnopqrstuvwxyz
@@ -131,9 +131,9 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(9)
-	@DisplayName("Create a doctor specialist with the description of length exceeding max length.")
-	public void createDoctorSpecialist_DescriptionLengthExceedsMaxLength_ThrowsException() {
-		var ds = new DoctorSpecialist();
+	@DisplayName("Should throw the exception when creating a disease with the description of length exceeding max length.")
+	public void createDisease_DescriptionLengthExceedsMaxLength_ThrowsException() {
+		var ds = new Disease();
 		ds.setDescription("""
 				abcdefghijklmnopqrstuvwxyz
 				abcdefghijklmnopqrstuvwxyz
@@ -152,22 +152,22 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(10)
-	@DisplayName("Create a doctor specialist with the name that already exists.")
-	public void createDoctorSpecialist_NameAlreadyExists_ThrowsException() {
-		var ds = new DoctorSpecialist();
-		ds.setName("Surgery");
+	@DisplayName("Should throw the exception when creating a disease with the name that already exists.")
+	public void createDisease_NameAlreadyExists_ThrowsException() {
+		var ds = new Disease();
+		ds.setName("Allergies");
 		
 		assertThrows(DuplicateEntityException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(11)
-	@DisplayName("Update a doctor specialist.")
-	public void updateDoctorSpecialist_ReturnUpdatedDoctorSpecialist() {
+	@DisplayName("Update a disease.")
+	public void updateDisease_ReturnUpdatedDisease() {
 		var id = 2L;
 		var ds = service.findById(id);
-		ds.setName("    Surgery Updated    ");
-		ds.setDescription("    Surgery Description    ");
+		ds.setName("    Allergies Updated    ");
+		ds.setDescription("    Allergies Description    ");
 		var saved = service.save(ds);
 		
 		assertEquals(ds, saved);
@@ -176,28 +176,26 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(12)
-	@DisplayName("Update a doctor specialist with the name of null value.")
-	public void updateDoctorSpecialist_NameIsNull_ThrowsException() {
+	@DisplayName("Should throw the exception when updating a disease with the name of null value.")
+	public void updateDisease_NameIsNull_ThrowsException() {
 		var ds = service.findById(2L);
 		ds.setName(null);
-		ds.setDescription("Surgery Description");
 		assertThrows(InvalidFieldException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(13)
-	@DisplayName("Update a doctor specialist with the empty name.")
-	public void updateDoctorSpecialist_NameIsEmpty_ThrowsException() {
+	@DisplayName("Should throw the exception when updating a disease with the empty name.")
+	public void updateDisease_NameIsEmpty_ThrowsException() {
 		var ds = service.findById(2L);
 		ds.setName("");
-		ds.setDescription("Surgery Description");
 		assertThrows(InvalidFieldException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(14)
-	@DisplayName("Update a doctor specialist with the name of length exceeding 100.")
-	public void updateDoctorSpecialist_NameLengthExceeds100_ThrowsException() {
+	@DisplayName("Should throw the exception when updating a disease with the name of length exceeding 100.")
+	public void updateDisease_NameLengthExceeds100_ThrowsException() {
 		var ds = service.findById(2L);
 		ds.setName("""
 				abcdefghijklmnopqrstuvwxyz
@@ -205,24 +203,22 @@ public class DoctorSpecialistServiceTest {
 				abcdefghijklmnopqrstuvwxyz
 				abcdefghijklmnopqrstuvwxyz
 				""");
-		ds.setDescription("Surgery Description");
 		assertThrows(InvalidFieldException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(15)
-	@DisplayName("Update a doctor specialist with the name that already exists.")
-	public void updateDoctorSpecialist_NameAlreadyExists_ThrowsException() {
+	@DisplayName("Should throw the exception when updating a disease with the name that already exists.")
+	public void updateDisease_NameAlreadyExists_ThrowsException() {
 		var ds = service.findById(2L);
-		ds.setName("OG");
-		ds.setDescription("Surgery Description");
+		ds.setName("Headache");
 		assertThrows(DuplicateEntityException.class, () -> service.save(ds));
 	}
 	
 	@Test
 	@Order(16)
-	@DisplayName("Update a doctor specialist with the description of length exceeding max length.")
-	public void updateDoctorSpecialist_DescriptionLengthExceedsMaxLength_ThrowsException() {
+	@DisplayName("Update a disease with the description of length exceeding max length.")
+	public void updateDisease_DescriptionLengthExceedsMaxLength_ThrowsException() {
 		var ds = service.findById(2L);
 		ds.setDescription("""
 				abcdefghijklmnopqrstuvwxyz
@@ -241,29 +237,29 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(17)
-	@DisplayName("Find a doctor specialist by id that exists.")
-	public void findDoctorSpecialistById_IdExists_ReturnResult() {
+	@DisplayName("Find a disease by id that exists.")
+	public void findDiseaseById_IdExists_ReturnResult() {
 		var id = 1L;
 		var result = service.findById(id);
 		
 		assertNotNull(result);
 		assertEquals(1L, result.getId());
-		assertEquals("OG", result.getName());
-		assertEquals("OG Description", result.getDescription());
+		assertEquals("Headache", result.getName());
+		assertEquals("Headache Description", result.getDescription());
 		
 		id = 2L;
 		result = service.findById(id);
 		
 		assertNotNull(result);
 		assertEquals(2L, result.getId());
-		assertEquals("Surgery Updated", result.getName());
-		assertEquals("Surgery Description", result.getDescription());
+		assertEquals("Allergies Updated", result.getName());
+		assertEquals("Allergies Description", result.getDescription());
 	}
 	
 	@Test
 	@Order(18)
-	@DisplayName("Find a doctor specialist by id that does not exist.")
-	public void findDoctorSpecialistById_IdNotExists_Null() {
+	@DisplayName("Find a disease by id that does not exist.")
+	public void findDiseaseById_IdNotExists_Null() {
 		var id = 3L;
 		var result = service.findById(id);
 		assertNull(result);
@@ -271,25 +267,25 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(19)
-	@DisplayName("Search the doctor specialists with a keyword.")
-	public void givenKeyword_SearchDoctorSpecialists_ReturnList() {
+	@DisplayName("Search the diseases with a keyword.")
+	public void givenKeyword_SearchDiseases_ReturnList() {
 		
 		var ds1 = service.findById(1L);
 		var ds2 = service.findById(2L);
 		
 		var list = List.of(ds1, ds2);
 		
-		var keyword = "OG";
+		var keyword = "head";
 		var resultList = service.search(keyword);;
 		assertEquals(1, resultList.size());
 		assertTrue(resultList.contains(ds1));
 		
-		keyword = "u";
+		keyword = "ler";
 		resultList = service.search(keyword);
 		assertEquals(1, resultList.size());
 		assertTrue(resultList.contains(ds2));
 		
-		keyword = "g";
+		keyword = "e";
 		resultList = service.search(keyword);
 		assertEquals(2, resultList.size());
 		assertTrue(resultList.containsAll(list));
@@ -311,7 +307,7 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(20)
-	@DisplayName("Delete a doctor specialist by id that exists.")
+	@DisplayName("Delete a disease by id that exists.")
 	public void deleteById_IdExists_True() {
 		var id = 1L;
 		var deleted = service.deleteById(id);
@@ -321,7 +317,7 @@ public class DoctorSpecialistServiceTest {
 	
 	@Test
 	@Order(21)
-	@DisplayName("Delete a doctor specialist by id that does not exist.")
+	@DisplayName("Delete a disease by id that does not exist.")
 	public void deleteById_IdNotExists_False() {
 		var deleted = service.deleteById(1L);
 		assertFalse(deleted);

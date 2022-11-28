@@ -17,40 +17,40 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import me.khun.clinic.application.Application;
-import me.khun.clinic.model.entity.DoctorSpecialist;
-import me.khun.clinic.model.repo.DoctorSpecialistRepo;
+import me.khun.clinic.model.entity.Disease;
+import me.khun.clinic.model.repo.DiseaseRepo;
 import me.khun.clinic.model.repo.exception.DataAccessException;
 import me.khun.clinic.test.DatabaseInitializer;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class DoctorSpecialistRepoTest {
-
-	private DoctorSpecialistRepo repo;
+public class DiseaseRepoTest {
 	
-	public DoctorSpecialistRepoTest() {
-		repo = Application.getDoctorSpecialistRepo();
+	private DiseaseRepo repo;
+	
+	public DiseaseRepoTest() {
+		repo = Application.getDiseaseRepo();
 	}
-
+	
 	@BeforeAll
 	public static void init() {
-		DatabaseInitializer.truncateTables(Application.getDataSource(), "doctor", "address", "user", "doctor_specialist");
+		DatabaseInitializer.truncateTables(Application.getDataSource(), "disease");
 	}
 	
 	@Test
 	@Order(1)
-	@DisplayName("Find all doctor specialists when there is no data and return empty list.")
-	public void findAllDoctorSpecialists_ThereIsNoData_EmptyList() {
+	@DisplayName("Find all diseases when there is no data and return empty list.")
+	public void findAllDisease_ThereIsNoData_EmptyList() {
 		var dsList = repo.findAll();
 		assertEquals(0, dsList.size());
 	}
 	
 	@Test
 	@Order(2)
-	@DisplayName("Create a doctor specialist.")
-	public void createDoctorSpecialist() {
-		var ds = new DoctorSpecialist();
-		ds.setName("OG");
-		ds.setDescription("OG Description");
+	@DisplayName("Create a disease.")
+	public void createDisease() {
+		var ds = new Disease();
+		ds.setName("Headache");
+		ds.setDescription("Headache Description");
 		var created = repo.create(ds);
 		
 		ds.setId(created.getId());
@@ -61,10 +61,10 @@ public class DoctorSpecialistRepoTest {
 	
 	@Test
 	@Order(3)
-	@DisplayName("Create a doctor specialist without the description.")
-	public void createDoctorSpecialist_WithoutDescription() {
-		var ds = new DoctorSpecialist();
-		ds.setName("Surgery");
+	@DisplayName("Create a disease without the non-required fields.")
+	public void createDisease_WithoutNonRequiredFields() {
+		var ds = new Disease();
+		ds.setName("Allergies");
 		var created = repo.create(ds);
 		
 		ds.setId(created.getId());
@@ -75,17 +75,17 @@ public class DoctorSpecialistRepoTest {
 	
 	@Test
 	@Order(4)
-	@DisplayName("Should throw the exception when creating a doctor specialist with the name that already exists.")
-	public void createDoctorSpecialist_NameAlreadyExists_ThrowsException() {
-		var ds = new DoctorSpecialist();
-		ds.setName("OG");
+	@DisplayName("Should throw the exception when creating a disease with the name that already exists.")
+	public void createDisease_NameAlreadyExists_ThrowsException() {
+		var ds = new Disease();
+		ds.setName("Headache");
 		assertThrows(DataAccessException.class, () -> repo.create(ds));
 	}
 	
 	@Test
 	@Order(5)
-	@DisplayName("Find all doctor specialists.")
-	public void findAllDoctorSpecialists() {
+	@DisplayName("Find all diseases.")
+	public void findAllDiseases() {
 		var dsList = repo.findAll();
 		assertEquals(2, dsList.size());
 		
@@ -98,29 +98,29 @@ public class DoctorSpecialistRepoTest {
 	
 	@Test
 	@Order(6)
-	@DisplayName("Find a doctor specialist by id that exists.")
-	public void findDoctorSpecialistById_IdExists_ReturnDoctorSpecialist() {
+	@DisplayName("Find a disease by id that exists.")
+	public void findDiseaseById_IdExists_ReturnDisease() {
 		var ds = repo.findById(1L);
 		assertEquals(1L, ds.getId());
-		assertEquals("OG", ds.getName());
-		assertEquals("OG Description", ds.getDescription());
+		assertEquals("Headache", ds.getName());
+		assertEquals("Headache Description", ds.getDescription());
 	}
 	
 	@Test
 	@Order(7)
-	@DisplayName("Find a doctor specialist by id that does not exist.")
-	public void findDoctorSpecialistById_IdNotExists_ThrowsException() {
+	@DisplayName("Find a disease by id that does not exist.")
+	public void findDiseaseById_IdNotExists_ThrowsException() {
 		var ds = repo.findById(3L);
 		assertNull(ds);
 	}
 	
 	@Test
 	@Order(8)
-	@DisplayName("Update the doctor specialist.")
-	public void updateDoctorSpecialist() {
+	@DisplayName("Update the disease.")
+	public void updateDisease() {
 		var ds = repo.findById(2L);
-		ds.setName("Surgery Updated");
-		ds.setDescription("Surgery Description");
+		ds.setName("Allergies Updated");
+		ds.setDescription("Allergies Description");
 		var updated = repo.update(ds);
 		
 		assertEquals(ds, updated);
@@ -129,16 +129,16 @@ public class DoctorSpecialistRepoTest {
 	
 	@Test
 	@Order(9)
-	@DisplayName("Update the doctor specialist with the name that already exists.")
-	public void updateDoctorSpecialist_NameAlreadyExists_ThrowsException() {
+	@DisplayName("Update the disease with the name that already exists.")
+	public void updateDisease_NameAlreadyExists_ThrowsException() {
 		var ds = repo.findById(2L);
-		ds.setName("OG");
+		ds.setName("Headache");
 		assertThrows(DataAccessException.class, () -> repo.create(ds));
 	}
 	
 	@Test
 	@Order(10)
-	@DisplayName("Search the doctor specialists by a filter.")
+	@DisplayName("Search the diseases by a filter.")
 	public void searchDoctorSpecialistsByFilter() {
 		
 		var ds1 = repo.findById(1L);
@@ -146,52 +146,55 @@ public class DoctorSpecialistRepoTest {
 		
 		var list = List.of(ds1, ds2);
 		
-		Predicate<DoctorSpecialist> filter = ds -> ds.getName().contains("OG");
+		Predicate<Disease> filter = ds -> ds.getName().contains("ada");
 		var result = repo.search(filter);
 		assertEquals(1, result.size());
 		assertTrue(result.contains(ds1));
 		
-		filter = ds -> ds.getName().contains("g");
+		filter = ds -> ds.getName().contains("Alle");
 		result = repo.search(filter);
 		assertEquals(1, result.size());
 		assertTrue(result.contains(ds2));
+		
+		filter = ds -> ds.getName().contains("e");
+		result = repo.search(filter);
+		assertEquals(2, result.size());
+		assertTrue(result.containsAll(list));
 		
 		filter = ds -> ds.getDescription().contains("Description");
 		result = repo.search(filter);
 		assertEquals(2, result.size());
 		assertTrue(result.containsAll(list));
 		
-		filter = ds -> ds.getName().contains("head");
+		filter = ds -> ds.getName().contains("Stomach");
 		result = repo.search(filter);
 		assertEquals(0, result.size());
 		
-		filter = ds -> ds.getDescription().contains("head");
+		filter = ds -> ds.getDescription().contains("Stomach");
 		result = repo.search(filter);
 		assertEquals(0, result.size());
-	}
-	
-	@Test
-	@Order(11)
-	@DisplayName("Delete the doctor specialist by id that exists.")
-	public void deleteDoctorSpecialistById_IdExists_True() {
-		var id = 1L;
-		var deleted = repo.deleteById(id);
-		assertTrue(deleted);
-		assertNull(repo.findById(id));
 	}
 	
 	@Test
 	@Order(12)
-	@DisplayName("Delete the doctor specialist by id that does not exist.")
-	public void deleteDoctorSpecialistById_IdNotExists_False() {
+	@DisplayName("Delete the disease by id that exists.")
+	public void deleteDiseaseById_IdExists_False() {
+		var deleted = repo.deleteById(1L);
+		assertTrue(deleted);
+	}
+
+	@Test
+	@Order(12)
+	@DisplayName("Delete the disease by id that does not exist.")
+	public void deleteDiseaseById_IdNotExists_False() {
 		var deleted = repo.deleteById(3L);
 		assertFalse(deleted);
 	}
 	
 	@Test
 	@Order(13)
-	@DisplayName("Delete Doctor Specialist by object.")
-	public void deleteDoctorSpecialistByObject_IdExists_True() {
+	@DisplayName("Delete the disease by object.")
+	public void deleteDiseaseByObject_IdExists_True() {
 		var id = 2L;
 		var ds = repo.findById(id);
 		var deleted = repo.delete(ds);
@@ -202,9 +205,8 @@ public class DoctorSpecialistRepoTest {
 	@Test
 	@Order(14)
 	@DisplayName("Should return empty list after deleted all entities.")
-	public void findAllDoctorSpecialists_ThereIsNoData() {
+	public void findAllDiseases_ThereIsNoData() {
 		var dsList = repo.findAll();
 		assertEquals(0, dsList.size());
 	}
-	
 }

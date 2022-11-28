@@ -39,10 +39,12 @@ public class AuthController extends BaseController {
 		getServletContext().getRequestDispatcher("/views/login.jsp").forward(req, resp);
 	}
 
+	@SuppressWarnings("unused")
 	private void login(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO implement here
 	}
 
+	@SuppressWarnings("unused")
 	private void logout(HttpServletRequest req, HttpServletResponse resp) {
 		// TODO implement here
 	}

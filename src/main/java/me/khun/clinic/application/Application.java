@@ -4,18 +4,22 @@ import javax.sql.DataSource;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import me.khun.clinic.model.repo.DiseaseRepo;
 import me.khun.clinic.model.repo.DoctorRepo;
 import me.khun.clinic.model.repo.DoctorSpecialistRepo;
 import me.khun.clinic.model.repo.UserRepo;
+import me.khun.clinic.model.repo.impl.MySqlDiseaseRepoImpl;
 import me.khun.clinic.model.repo.impl.MySqlDoctorRepoImpl;
 import me.khun.clinic.model.repo.impl.MySqlDoctorSpecialistRepoImpl;
-import me.khun.clinic.model.repo.jdbc.PropertyReader;
+import me.khun.clinic.model.service.DiseaseService;
+import me.khun.clinic.model.service.DiseaseServiceImpl;
 import me.khun.clinic.model.service.DoctorService;
 import me.khun.clinic.model.service.DoctorSpecialistService;
 import me.khun.clinic.model.service.UserService;
 import me.khun.clinic.model.service.impl.DoctorServiceImpl;
 import me.khun.clinic.model.service.impl.DoctorSpecialistServiceImpl;
 import me.khun.clinic.model.service.impl.UserServiceImpl;
+import me.khun.clinic.util.PropertyReader;
 
 public class Application {
 
@@ -122,5 +126,13 @@ public class Application {
 	
 	public static DoctorService getDoctorService() {
 		return new DoctorServiceImpl(getDoctorRepo());
+	}
+	
+	public static DiseaseRepo getDiseaseRepo() {
+		return new MySqlDiseaseRepoImpl(getDataSource());
+	}
+
+	public static DiseaseService getDiseaseService() {
+		return new DiseaseServiceImpl(getDiseaseRepo());
 	}
 }

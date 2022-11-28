@@ -1,5 +1,7 @@
 package me.khun.clinic.model.entity;
 
+import java.util.Objects;
+
 public class Disease {
 
 	public Disease() {
@@ -10,8 +12,6 @@ public class Disease {
 	private String name;
 
 	private String description;
-
-	private boolean deleted;
 
 	public Long getId() {
 		return id;
@@ -37,13 +37,22 @@ public class Disease {
 		this.description = description;
 	}
 
-	public boolean isDeleted() {
-		return deleted;
+	@Override
+	public int hashCode() {
+		return Objects.hash(description, id, name);
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Disease other = (Disease) obj;
+		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
+				&& Objects.equals(name, other.name);
 	}
-
 	
 }

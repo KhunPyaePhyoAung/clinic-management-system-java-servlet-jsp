@@ -8,7 +8,9 @@
 		<h2>${viewTitle}</h2>
 		
 		<c:if test="${not empty exception}">
-			<app:errorMessage message="${exception.getMessage()}"/>
+			<div class="mt-4">
+				<app:errorMessage message="${exception.getMessage()}"/>
+			</div>
 		</c:if>
 		
 		<c:url var="saveUrl" value="/member/change-password"></c:url>

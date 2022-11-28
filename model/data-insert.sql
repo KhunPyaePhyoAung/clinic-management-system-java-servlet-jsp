@@ -44,3 +44,11 @@ INSERT INTO `doctor` (`id`, `specialist_id`) VALUES
 (5, 5),
 (6, 6),
 (7, 7);
+
+INSERT INTO `disease` (`name`, `description`) VALUES
+('Allergies', 'Allergies description'),
+('Conjunctivitis', 'Conjunctivitis description'),
+('Diarrhea', 'Diarrhea description'),
+('Headaches', 'Headaches description'),
+('Stomach Aches', 'Stomach Aches description'),
+('Mononucleosis', 'Mononucleosis description');

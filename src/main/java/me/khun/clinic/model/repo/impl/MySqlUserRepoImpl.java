@@ -8,9 +8,9 @@ import me.khun.clinic.application.Application;
 import me.khun.clinic.model.entity.User;
 import me.khun.clinic.model.repo.UserRepo;
 import me.khun.clinic.model.repo.exception.DataAccessException;
-import me.khun.clinic.model.repo.jdbc.PropertyReader;
 import me.khun.clinic.model.repo.jdbc.RowMapper;
 import me.khun.clinic.model.repo.jdbc.UserRowMapper;
+import me.khun.clinic.util.PropertyReader;
 
 public class MySqlUserRepoImpl implements UserRepo {
 	

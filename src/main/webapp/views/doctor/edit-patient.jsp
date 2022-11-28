@@ -8,17 +8,6 @@
         
         <c:url var="saveUrl" value="/doctor/patients/save" />
         <form class="mt-2" action="${saveUrl}" method="post">
-        
-        	<div class="text-center">
-        		<div class="profile-picture-select">
-        			<c:url var="defaultProfilePictureUrl" value="/assets/images/man.png" />
-        			<img class="profile-img dropdown-btn" src="${defaultProfilePictureUrl}" alt="Profile Picture" onclick="toggleShowProfilePictureMenu()" />
-        			<div id="profile-picture-menu" class="profile-picture-menu dropdown-content">
-        				<div class="menu-item">Select Picture</div>
-        				<div class="menu-item">Remove Picture</div>
-        			</div>
-        		</div>
-        	</div>
         	
         	<div class="row mt-2">
         		<div class="col form-group w-50">

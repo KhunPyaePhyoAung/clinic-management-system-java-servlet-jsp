@@ -1,17 +1,24 @@
 package me.khun.clinic.model.dto;
 
+import java.util.List;
+
+import me.khun.clinic.model.entity.Disease;
+
 public class DiseaseDto {
-
-	public DiseaseDto() {
-	}
-
+	
 	private Long id;
 
 	private String name;
 
 	private String description;
-
-	private boolean deleted;
+	
+	public DiseaseDto() {}
+	
+	public DiseaseDto(Disease disease) {
+		this.id = disease.getId();
+		this.name = disease.getName();
+		this.description = disease.getDescription();
+	}
 
 	public Long getId() {
 		return id;
@@ -36,14 +43,13 @@ public class DiseaseDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public boolean isDeleted() {
-		return deleted;
+	
+	public static DiseaseDto of(Disease disease) {
+		return new DiseaseDto(disease);
 	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	
+	public static List<DiseaseDto> ofList(List<Disease> diseaseList) {
+		return diseaseList.stream().map(d -> new DiseaseDto(d)).toList();
 	}
-
 	
 }
